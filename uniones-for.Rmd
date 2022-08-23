@@ -1,0 +1,107 @@
+---
+title: "Uniones y for"
+author: ""
+date: "2022-08-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(ggplot2)
+library(datos)
+
+```
+
+# Uniones
+
+El siguiente código genera un mapa de la CABA que se puede sumar a cualquier plot. 
+Necesita el paquete sf; instalalo si no lo tenés. 
+
+```{r mapa_caba}
+barrios <- sf::st_read("datos/barrios-CABA.geojson", stringsAsFactors = FALSE)
+mapa_caba <- ggplot2::geom_sf(data = barrios, fill = NA, inherit.aes = FALSE) 
+```
+
+Por ejemplo: 
+
+```{r}
+ggplot() +
+  mapa_caba
+```
+
+
+Leé los datos de bicicletas y estaciones. 
+
+
+
+1. Calculá la probabilidad media de cada estación de tener 0 bicicletas disponibles durante el día. (Podés calcular esto como `mean(bicis_disponibles == 0)`)
+
+2. Graficá el resultado anterior con un gráfico de columnas (`geom_col()`) con el id de la estación en el eje x y la probabiliad de no encontrar bicicletas en el eje y. ¿Ves algún patrón?
+
+
+3. Ahora uní el resultado anterior con los datos de estaciones y graficalo en un mapa, con `lon` en el eje x, `lat` en el eje y, y usando el color para mostar la probabilidad de no encontrar bicicletas. Podés sumarl `mapa_caba` para agregarle los barrios. ¿Ves algún patrón? 
+
+
+
+
+Usando vuelos y aviones
+
+
+1. Para cada vuelo, calculá la edad del avión. 
+Podés calcular la edad del avión como la resta entre el año del vuelo y el año de fabricación del avión. 
+Para eso hay que unir las tablas `vuelos` y `aviones`. 
+El año del vuelo y el año de fabricación tienen el mismo nombre (anio). ¿Qué pasa cuando las unís? ¿Cómo lo solucionarías? (Fijate en el argumento `suffix` de la función de unión.)
+
+2. ¿Cómo varía el atraso medio de salida en función de la edad? 
+
+
+# Bucles for
+
+
+
+1. Completá este loop para que muestre el cuadrado de los números del 1 al 7
+
+
+```{r, error =  TRUE}
+for (i in ____) {
+  ___
+}
+```
+
+2. Modificá el loop anterior para que imprima los mismos números pero del 7 al 1. 
+
+
+3. La siguiente tabla tiene los nombres de los miembros de cada grupo:
+
+```{r}
+grupos <- tibble::tribble(
+            ~apellido,            ~nombre,     ~grupo,
+           "Aguilera",  "Maria Florencia",  "Grupo 4",
+        "Ospitaleche",            "Rocio",  "Grupo 4",
+         "Altamirano",         "Joaquina",  "Grupo 3",
+           "Montagna",         "Federico",  "Grupo 3",
+   "Ankudowicz Roman", "Santiago Nicolas", "Grupo 15",
+            "Ferrero",            "Kevin", "Grupo 15",
+           "Bardauil",           "Ariana",  "Grupo 1",
+              "Paoli",         "Leonardo",  "Grupo 1",
+  "Bonpland Mignaquy",            "Clara",  "Grupo 2",
+   "Fernandez Robles",     "Alberto Saba",  "Grupo 2",
+           "Di Carlo",            "Julia",  "Grupo 8",
+              "Hadad",      "Iara Nadina",  "Grupo 8",
+              "Guala",            "Lucia", "Grupo 16",
+             "Gueler",          "Joaquin",  "Grupo 6",
+           "Guerrini",        "Constanza", "Grupo 10",
+            "Horwitz",  "Samantha Denise",  "Grupo 7",
+  "Rodriguez Mendoza",           "Matias",  "Grupo 7",
+    "Martinez Oviedo",  "Claudia Fabiana", "Grupo 18",
+            "Perrone", "Patricia Claudia",  "Grupo 9",
+                 "Pi",        "Marianela",  "Grupo 9",
+               "Sosa",   "Valeria Vanesa", "Grupo 11"
+  )
+
+```
+
+Escribí un for loop que imprima el nombre de cada grupo y la cantidad de miembros que tiene. Por ejemplo, "Grupo 4 tiene 2 miembros".
+
